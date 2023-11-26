@@ -7,13 +7,10 @@ from scapy.layers.http import HTTPRequest
 
 
 class Poller(Thread):
-    """
-    An object to poll system resources and processes periodically.
-    """
+    """An object to poll system resources and processes periodically."""
 
     def __init__(self, lfreq: int = 50, respoll_period: int = 600, procpoll_period: int = 60):
-        """
-        Construct a poller.
+        """Construct a poller.
         lfreq - Number of iterations of loop per second
         respoll_period - The time in seconds between successive polls of system resources.
         sniff_period - The time in seconds between new process polls.
@@ -45,9 +42,7 @@ class Poller(Thread):
             disk_stats.write_count, disk_stats.write_bytes / (1 << 10), disk_stats.write_time)))
 
     def run(self):
-        """
-        Start an infinite loop with specified frequency and poll.
-        """
+        """Start an infinite loop with specified frequency and poll."""
         elapsed = 0
         process_set = set(psutil.process_iter())
 
@@ -85,23 +80,15 @@ class Poller(Thread):
 
 
 class Sniffer:
-    """
-    Use scapy's AsyncSniffer to sniff packets
-    """
+    """Use scapy's AsyncSniffer to sniff packets"""
 
     def __init__(self):
-        """
-        Constructor.
-        """
         self.log_queue = []
         self.sniffer = AsyncSniffer(
             prn=self._append_packet, filter='tcp and ip', store=None)
         self.sniffer.start()
 
     def stop(self):
-        """
-        Stop. 
-        """
         self.sniffer.stop()
 
     def _append_packet(self, x):

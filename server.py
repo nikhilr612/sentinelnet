@@ -5,9 +5,7 @@ from llog import msgupack_hook
 from collections.abc import Callable
 
 def servlet_action(conn):
-    """
-    Target function for servlet threads.
-    """
+    """Target function for servlet threads."""
     reader = conn.makefile(mode='rb')
     data = msgpack.unpack(reader, ext_hook=msgupack_hook)
     print(data)
@@ -16,9 +14,7 @@ def servlet_action(conn):
 
 class Server(Thread):
     def __init__(self, port: int = 6444, queue: int = 5, target: Callable[[socket.socket], None] = servlet_action):
-        """
-        Create a socket and bind to a specific port, with a maximum number of connections to enqueue.
-        """
+        """Create a socket and bind to a specific port, with a maximum number of connections to enqueue."""
         assert port != 0
         assert queue != 0
 
@@ -31,9 +27,7 @@ class Server(Thread):
         self.alive = True
 
     def kill(self):
-        """
-        Terminate the server loop.
-        """
+        """Terminate the server loop."""
         self.alive = False
 
     def run(self):

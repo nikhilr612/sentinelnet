@@ -7,8 +7,7 @@ from llog import msgpack_hook, msgupack_hook
 
 class Client:
     def __init__(self, rperiod=15, host='localhost', port=6444, **poller_kwargs):
-        """
-        Constructor for client.
+        """Constructor for client.
         rperiod - the approximate time interval in minutes between successive reports to server.
         host
         port
@@ -25,9 +24,8 @@ class Client:
         self.et_report = rperiod
 
     def send_report(self):
-        """
-        Connect to server and send all pending logs.
-        """
+        """Connect to server and send all pending logs."""
+        
         # Collect logs
         total_logs = []
         total_logs.extend(self.poller.log_queue)
@@ -47,9 +45,7 @@ class Client:
         sock.close()
 
     def begin(self):
-        """
-        Start client.
-        """
+        """Start client."""
         while True:
             print("Monitoring... ")
             self.send_report()

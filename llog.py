@@ -7,9 +7,7 @@ LOG_TYPE_CODE = 42
 
 
 class LogType(Enum):
-    """
-    Enum for types of log lines.
-    """
+    """Enum for types of log lines."""
     CPU_USAGE = 0   # Log type for CPU usage.      data: float
     MEM_USAGE = 1   # Log type for Memory usage.   data: float
     NEW_PROCESS = 2  # Log type for new processes   data: (name, cpu_percent)
