@@ -2,3 +2,5 @@ scapy
 numpy
 matplotlib
 msgpack
+redis[hiredis]
+pandas

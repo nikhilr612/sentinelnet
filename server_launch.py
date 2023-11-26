@@ -5,6 +5,7 @@ from redis.commands.json.path import Path
 from server import Server
 from llog import msgupack_hook, LogType
 
+# TODO Either choose a long-term database or use redis as the database
 r = redis.Redis(host='localhost', port=6379, db=0)
 
 
