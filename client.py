@@ -38,6 +38,7 @@ class Client:
         # Connect and send.
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect(self.target)
+        print("Connection mode:", (sig := sock.recv(1)));
         filelike = sock.makefile(mode='wb')
         msgpack.pack(total_logs, filelike,
                      default=msgpack_hook, use_bin_type=True)
@@ -49,4 +50,4 @@ class Client:
         while True:
             print("Monitoring... ")
             self.send_report()
-            time.sleep(self.rperiod)
+            time.sleep(self.rperiod*60)

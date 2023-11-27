@@ -65,11 +65,8 @@ class Poller(Thread):
                 setdiff = newset - process_set
                 for p in setdiff:
                     try:
-                        t = None
-                        with p.oneshot():
-                            t = (p.name(), p.cpu_times().user)
                         self.log_queue.append(llog.new_line(
-                            llog.LogType.NEW_PROCESS, t))
+                            llog.LogType.NEW_PROCESS, p.name()))
                     except:
                         pass  # Suppress errors..
                 process_set = newset

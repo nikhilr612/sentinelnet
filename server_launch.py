@@ -3,70 +3,31 @@ import numpy as np
 import redis
 from redis.commands.json.path import Path
 from server import Server
-from llog import msgupack_hook, LogType
+from llog import LogType
+
+PREFIX_S = "computer"
 
 # TODO Either choose a long-term database or use redis as the database
 r = redis.Redis(host='localhost', port=6379, db=0)
 
-
-def action(conn):
-    reader = conn.makefile(mode='rb')
-    data = msgpack.unpack(reader, ext_hook=msgupack_hook)
-
-    # TODO Add a way to distinguish between devices when storing to DB
-    if not r.json().get('computer:1'):
-        r.json().set('computer:1', Path.root_path(), {})
+def action(mac_addr, data):
+    dev_id = PREFIX_S + ':' + mac_addr;
+    if not r.json().get(dev_id):
+        # Create the details 
+        r.json().set(dev_id, Path.root_path(), {});
+        r.json().set(dev_id, 'cpu_usage', []);
+        r.json().set(dev_id, 'mem_usage', []);
+        r.json().set(dev_id, 'disk_write', []);
+        r.json().set(dev_id, 'disk_read', []);
+        r.json().set(dev_id, 'processes', []);
+        # TODO Add Network packet captures.
 
     # TODO Refactor to uniformly store to database using enum metadata
     for log in data:
-        match LogType(log[1]):
-            case LogType.CPU_USAGE:
-                data_point = (log[0], log[2])
+        log_type = LogType(log[1]);
+        data_point = (log[0], *log[2]) if log_type.has_tuple() else (log[0], log[2]);
+        r.json().arrappend(dev_id, str(log_type), data_point);
 
-                if 'cpu_usage' in r.json().objkeys('computer:1'):
-                    r.json().arrappend('computer:1', 'cpu_usage', data_point)
-                else:
-                    r.json().set('computer:1', 'cpu_usage', [data_point])
-
-            case LogType.MEM_USAGE:
-                data_point = (log[0], log[2])
-
-                if 'mem_usage' in r.json().objkeys('computer:1'):
-                    r.json().arrappend('computer:1', 'mem_usage', data_point)
-                else:
-                    r.json().set('computer:1', 'mem_usage', [data_point])
-
-            case LogType.DISK_READ:
-                data_point = (log[0], *log[2])
-
-                if 'disk_read' in r.json().objkeys('computer:1'):
-                    r.json().arrappend('computer:1', 'disk_read', data_point)
-                else:
-                    r.json().set('computer:1', 'disk_read', [data_point])
-
-            case LogType.DISK_WRITE:
-                data_point = (log[0], *log[2])
-
-                if 'disk_write' in r.json().objkeys('computer:1'):
-                    r.json().arrappend('computer:1', 'disk_write', data_point)
-                else:
-                    r.json().set('computer:1', 'disk_write', [data_point])
-
-            case LogType.NEW_PROCESS:
-                data_point = (log[0], *log[2][:1])
-
-                if 'processes' in r.json().objkeys('computer:1'):
-                    r.json().arrappend('computer:1', 'processes', data_point)
-                else:
-                    r.json().set('computer:1', 'processes', [data_point])
-
-            # TODO Network packets never appear, so currently left out
-            case other:
-                print(f"TYPE: {other}\nTIME: {log[0]}\nDATA: {log[2]}")
-
-    reader.close()
-    conn.close()
-
-
-s = Server(target=action)
-s.start()
+if __name__ == "__main__":
+    s = Server(target=action)
+    s.start()
