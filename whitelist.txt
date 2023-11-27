@@ -1,0 +1,2 @@
+; Add lines with allowed programs to run
+; use ';' to comment out line
