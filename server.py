@@ -32,6 +32,7 @@ class Server(Thread):
 
     def run(self):
         self.serversocket.listen(self.conn_queue)
+        print("Server Online")
         while self.alive:
             conn, addr = self.serversocket.accept()
             print("Accepted connection from", addr)

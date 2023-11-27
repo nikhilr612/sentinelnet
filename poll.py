@@ -44,6 +44,7 @@ class Poller(Thread):
     def run(self):
         """Start an infinite loop with specified frequency and poll."""
         elapsed = 0
+        # TODO Might be better to less frequently send entire list unless it's a startup script
         process_set = set(psutil.process_iter())
 
         while True:
@@ -92,7 +93,7 @@ class Sniffer:
         self.sniffer.stop()
 
     def _append_packet(self, x):
-        # Check if it is HTTP or if the destination port is 443 (HTTPS)
+        # TODO Currently seems to not work, no network packets are sent
         if x.haslayer(HTTPRequest) or x[TCP].dport == 443:
             self.log_queue.append(llog.new_line(
                 llog.LogType.NET_CAPTURE, (x[IP].src, x[IP].dst)))

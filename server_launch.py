@@ -60,6 +60,7 @@ def action(conn):
                 else:
                     r.json().set('computer:1', 'processes', [data_point])
 
+            # TODO Network packets never appear, so currently left out
             case other:
                 print(f"TYPE: {other}\nTIME: {log[0]}\nDATA: {log[2]}")
 

@@ -1,2 +1,11 @@
 ; Add lines with allowed programs to run
 ; use ';' to comment out line
+firefox.exe
+Code.exe
+svchost.exe
+chrome.exe
+HxTsr.exe
+RuntimeBroker.exe
+GameBarFTServer.exe
+GameBar.exe
+GoogleUpdate.exe
