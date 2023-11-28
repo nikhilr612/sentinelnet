@@ -26,7 +26,7 @@ def action(mac_addr, data):
     for log in data:
         log_type = LogType(log[1]);
         data_point = (log[0], *log[2]) if log_type.has_tuple() else (log[0], log[2]);
-        r.json().arrappend(dev_id, str(log_type), data_point);
+        r.json().arrappend(dev_id, log_type.name.lower(), data_point);
 
 if __name__ == "__main__":
     s = Server(target=action)

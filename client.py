@@ -2,7 +2,9 @@ import poll
 import time
 import msgpack
 import socket
-from llog import msgpack_hook, msgupack_hook
+import nacl.public as nacl
+import nacl.utils as naclu
+from llog import msgpack_hook
 
 
 class Client:
@@ -38,11 +40,20 @@ class Client:
         # Connect and send.
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect(self.target)
-        print("Connection mode:", (sig := sock.recv(1)));
-        filelike = sock.makefile(mode='wb')
-        msgpack.pack(total_logs, filelike,
-                     default=msgpack_hook, use_bin_type=True)
-        filelike.close()
+        klen = int.from_bytes(sock.recv(1)); # Key length
+        if klen == 0: # No Key
+            print("warning: connection to server is not encrypted.");
+            filelike = sock.makefile(mode='wb')
+            msgpack.pack(total_logs, filelike, default=msgpack_hook, use_bin_type=True);
+            filelike.close()
+        else:
+            key_data = sock.recv(klen);                                        # Read key data
+            pkey = nacl.PublicKey(key_data, encoder=nacl.encoding.RawEncoder); # Construct key
+            sealed_box = nacl.SealedBox(pkey);
+            enc_data = sealed_box.encrypt(msgpack.packb(total_logs,
+                                default=msgpack_hook, use_bin_type=True));    # Serialize and encrypt.
+            sock.sendall(len(enc_data).to_bytes(4));                           # Send data length as 4 bytes.
+            sock.sendall(enc_data);
         sock.close()
 
     def begin(self):

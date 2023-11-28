@@ -20,19 +20,6 @@ class LogType(Enum):
         """
         return self.value < 0;
 
-    def __str__(self):
-        """
-        Return a 'user-friendly' name for the log type.
-        """
-        return {
-            LogType.CPU_USAGE: 'cpu_usage',
-            LogType.MEM_USAGE: 'mem_usage',
-            LogType.NEW_PROCESS: 'processes',
-            LogType.DISK_READ: 'disk_read',
-            LogType.DISK_WRITE: 'disk_write',
-            LogType.NET_CAPTURE: 'captures'
-        }[self];
-
 LogLine = namedtuple("LogLine", ['timestamp', 'logtype', 'data'])
 
 

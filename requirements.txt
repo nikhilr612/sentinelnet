@@ -4,3 +4,4 @@ matplotlib
 msgpack
 redis[hiredis]
 pandas
+pynacl
