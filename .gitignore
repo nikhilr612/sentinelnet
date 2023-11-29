@@ -165,3 +165,8 @@ test.py
 myclient.py
 .gitignore
 dump.rdb
+cpu.csv
+disk_read.csv
+disk_write.csv
+mem.csv
+net.csv

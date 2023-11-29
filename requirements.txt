@@ -5,3 +5,4 @@ msgpack
 redis[hiredis]
 pandas
 pynacl
+salesforce-merlion[all]

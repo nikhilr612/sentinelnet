@@ -54,7 +54,6 @@ class Client:
             sealed_box = nacl.SealedBox(pkey)
             enc_data = sealed_box.encrypt(msgpack.packb(total_logs,
                                                         default=msgpack_hook, use_bin_type=True))    # Serialize and encrypt.
-            # Send data length as 4 bytes.
             sock.sendall(len(enc_data).to_bytes(4))
             sock.sendall(enc_data)
         sock.close()
