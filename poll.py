@@ -55,7 +55,6 @@ class Poller(Thread):
             self.et_proc_poll -= elapsed
 
             if self.et_res_poll <= 0:
-                # poll system resources.
                 self._poll_sys_res()
                 self.et_res_poll = self.res_poll_period
 
@@ -80,17 +79,16 @@ class Poller(Thread):
 class Sniffer:
     """Use scapy's AsyncSniffer to sniff packets"""
 
-    def __init__(self):
+    def __init__(self, iface=None):
         self.log_queue = []
         self.sniffer = AsyncSniffer(
-            prn=self._append_packet, filter='tcp and ip', store=None)
+            prn=self._append_packet, filter='tcp and ip', store=None, iface=iface)
         self.sniffer.start()
 
     def stop(self):
         self.sniffer.stop()
 
     def _append_packet(self, x):
-        # TODO Currently seems to not work, no network packets are sent
         if x.haslayer(HTTPRequest) or x[TCP].dport == 443:
             self.log_queue.append(llog.new_line(
-                llog.LogType.NET_CAPTURE, (x[IP].src, x[IP].dst)))
+                llog.LogType.NET_CAPTURE, (x[IP].src, x[IP].dst))) # Is src necessary as only requests are captured?

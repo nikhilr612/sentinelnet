@@ -7,7 +7,7 @@ from llog import msgpack_hook
 
 
 class Client:
-    def __init__(self, rperiod=15, host='localhost', port=6444, **poller_kwargs):
+    def __init__(self, rperiod=15, host='localhost', port=6444, iface=None, **poller_kwargs):
         """Constructor for client.
         rperiod - the approximate time interval in minutes between successive reports to server.
         host
@@ -20,7 +20,7 @@ class Client:
         self.target = (host, port)
         self.poller = poll.Poller(**poller_kwargs)
         self.poller.start()
-        self.sniff = poll.Sniffer()
+        self.sniff = poll.Sniffer(iface)
         self.rperiod = rperiod
         self.et_report = rperiod
 
