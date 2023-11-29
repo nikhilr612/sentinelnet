@@ -64,4 +64,4 @@ class Client:
         while True:
             print("Monitoring... ")
             self.send_report()
-            time.sleep(self.rperiod)
+            time.sleep(self.rperiod*60)
