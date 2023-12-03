@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SURVIELENCE</class>
+ <widget class="QMainWindow" name="SURVIELENCE">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>777</width>
+    <height>644</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>LMNK TECHNOLOGIES</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>61</x>
+      <y>20</y>
+      <width>581</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <property name="text">
+     <string>WELCOME TO SURVILLANCE SYSTEM</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::MarkdownText</enum>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>510</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>RESET</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>154</x>
+      <y>510</y>
+      <width>91</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>FAULTY FILES</string>
+    </property>
+   </widget>
+   <widget class="QScrollBar" name="verticalScrollBar">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>49</y>
+      <width>20</width>
+      <height>611</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="QTimeEdit" name="timeEdit">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>40</y>
+      <width>118</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QListView" name="listView">
+    <property name="geometry">
+     <rect>
+      <x>35</x>
+      <y>91</y>
+      <width>681</width>
+      <height>411</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>777</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFILE">
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="title">
+     <string>FILE</string>
+    </property>
+    <addaction name="actionNEW"/>
+    <addaction name="actionSAVE"/>
+   </widget>
+   <widget class="QMenu" name="menuVIEW">
+    <property name="title">
+     <string>VIEW</string>
+    </property>
+    <addaction name="actionALL"/>
+    <addaction name="actionSAFE"/>
+    <addaction name="actionUNSAFE"/>
+   </widget>
+   <widget class="QMenu" name="menuHELP">
+    <property name="title">
+     <string>HELP</string>
+    </property>
+   </widget>
+   <addaction name="menuFILE"/>
+   <addaction name="menuVIEW"/>
+   <addaction name="menuHELP"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionNEW">
+   <property name="text">
+    <string>NEW</string>
+   </property>
+  </action>
+  <action name="actionSAVE">
+   <property name="text">
+    <string>SAVE</string>
+   </property>
+  </action>
+  <action name="actionALL">
+   <property name="text">
+    <string>ALL</string>
+   </property>
+  </action>
+  <action name="actionSAFE">
+   <property name="text">
+    <string>SAFE </string>
+   </property>
+  </action>
+  <action name="actionUNSAFE">
+   <property name="text">
+    <string>UNSAFE</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
