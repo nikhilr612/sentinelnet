@@ -18,19 +18,13 @@ def action(mac_addr, data):
         r.json().set(dev_id, 'mem_usage', [])
         r.json().set(dev_id, 'disk_write', [])
         r.json().set(dev_id, 'disk_read', [])
-        r.json().set(dev_id, 'processes', [])
+        r.json().set(dev_id, 'new_process', [])
         r.json().set(dev_id, 'net_capture', [])
 
-    # TODO Refactor to uniformly store to database using enum metadata
     for log in data:
         log_type = LogType(log[1])
-        data_point = (
-            log[0], *log[2]) if log_type.has_tuple() else (log[0], log[2])
-        if log_type==LogType.NEW_PROCESS:
-            r.json().arrappend(dev_id, 'processes', data_point)
-        else:
-            r.json().arrappend(dev_id, log_type.name.lower(), data_point)
-
+        data_point = (log[0], *log[2]) if log_type.has_tuple() else (log[0], log[2])
+        r.json().arrappend(dev_id, log_type.name.lower(), data_point)
 
 if __name__ == "__main__":
     s = Server(target=action)
