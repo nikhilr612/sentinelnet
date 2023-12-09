@@ -4,7 +4,7 @@ import msgpack
 import socket
 import nacl.public as nacl
 from llog import msgpack_hook
-
+import argparse
 
 class Client:
     def __init__(self, rperiod=15, host='localhost', port=6444, iface=None, **poller_kwargs):
@@ -64,3 +64,13 @@ class Client:
             print("Monitoring... ")
             self.send_report()
             time.sleep(self.rperiod*60)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+                    prog='SentinelNet Client',
+                    description='Headless client monitor')
+    parser.add_argument('--host', type=str, default='localhost');           # positional argument
+    parser.add_argument('-p', '--port', type=int, default=6444);
+    parser.add_argument('-r', '--rperiod', type=int, default=15);
+    args = parser.parse_args();
+    Client(args.rperiod, args.host, args.port).begin();
