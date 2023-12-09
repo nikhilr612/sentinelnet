@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
 # For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
 #
+import dash_bootstrap_components as dbc
 from dash import dcc
 from dash import html, dash_table
 from pages.utils import create_modal, create_empty_figure
@@ -48,15 +49,15 @@ def create_metric_stats_table(metric_stats=None, column=None):
     return table
 
 
-def create_control_panel() -> html.Div:
-    return html.Div(
+def create_control_panel() -> dbc.Container:
+    return dbc.Container(
         id="control-card",
         children=[
             html.Br(),
             html.P("Select Device"),
-            dcc.Dropdown(id="select-device", options=[], style={"width": "100%"}),
+            dcc.Dropdown(id="select-device", options=[], style={"width": "100%"}, className='dbc'),
             html.Br(),
-            html.Button("Refresh Device List", id="refresh-devices", n_clicks=0),
+            dbc.Button("Refresh Device List", id="refresh-devices", n_clicks=0),
             html.P("Select Data File"),
             dcc.Dropdown(id="select-file", options=[], style={"width": "100%"}),
             html.Br(),
@@ -73,8 +74,8 @@ def create_control_panel() -> html.Div:
             html.Br(),
             html.Div(
                 children=[
-                    html.Button(id="data-btn", children="Load", n_clicks=0),
-                    html.Button(id="data-cancel-btn", children="Cancel", style={"margin-left": "15px"}),
+                    dbc.Button(id="data-btn", children="Load", n_clicks=0),
+                    dbc.Button(id="data-cancel-btn", children="Cancel", style={"margin-left": "15px"}),
                 ],
                 style={"textAlign": "center"},
             ),
@@ -87,7 +88,7 @@ def create_control_panel() -> html.Div:
             html.Br(),
             html.Div(
                 children=[
-                    html.Button(id="data-download-btn", children="Download", n_clicks=0),
+                    dbc.Button(id="data-download-btn", children="Download", n_clicks=0),
                     dcc.Download(id="download-data"),
                 ],
                 style={"textAlign": "center"},

@@ -54,6 +54,11 @@ def create_layout() -> html.Div:
         dcc.Tab(label="Forecasting", value="forecasting", style=tab_style, selected_style=tab_selected_style)
     )
     values.append("forecasting")
+    # Violations tab
+    children.append(
+        dcc.Tab(label="Violations", value="violations", style=tab_style, selected_style=tab_selected_style)
+    )
+    values.append("violations")
 
     layout = html.Div(
         id="app-content",

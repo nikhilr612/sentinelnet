@@ -15,6 +15,7 @@ from utils.layout import create_banner, create_layout
 from pages.data import create_data_layout
 from pages.forecast import create_forecasting_layout
 from pages.anomaly import create_anomaly_layout
+from pages.violations import create_violations_layout
 
 from callbacks import data
 from callbacks import forecast
@@ -28,7 +29,8 @@ app = dash.Dash(
     __name__,
     meta_tags=[{"name": "viewport",
                 "content": "width=device-width, initial-scale=1"}],
-    external_stylesheets=[dbc.themes.LUX, "https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates/dbc.min.css"],
+    external_stylesheets=[
+        dbc.themes.LUX, "https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates/dbc.min.css"],
     title="Merlion Dashboard",
 )
 app.config["suppress_callback_exceptions"] = True
@@ -39,8 +41,8 @@ app.layout = html.Div(
         dcc.Store(id="data-state"),
         dcc.Store(id="anomaly-state"),
         dcc.Store(id="forecasting-state"),
-    ]
-,className='dbc')
+        dcc.Store(id="violations-state"),
+    ], className='dbc')
 server = app.server
 
 
@@ -62,3 +64,5 @@ def _click_tab(tab, data_state, anomaly_state, forecasting_state):
         return create_forecasting_layout()
     elif tab == "anomaly":
         return create_anomaly_layout()
+    elif tab == "violations":
+        return create_violations_layout()
