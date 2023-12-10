@@ -50,10 +50,22 @@ def create_layout() -> html.Div:
     )
     values.append("anomaly")
     # Forecasting tab
+<<<<<<< HEAD
+    children.append(
+        dcc.Tab(label="Forecasting", value="forecasting", style=tab_style, selected_style=tab_selected_style)
+    )
+    values.append("forecasting")
+    # Violations tab
+    children.append(
+        dcc.Tab(label="Violations", value="violations", style=tab_style, selected_style=tab_selected_style)
+    )
+    values.append("violations")
+=======
     # children.append(
     #    dcc.Tab(label="Forecasting", value="forecasting", style=tab_style, selected_style=tab_selected_style)
     # )
     # values.append("forecasting")
+>>>>>>> f5b063f263e13c2be27e13890595f53193844ceb
 
     layout = html.Div(
         id="app-content",
