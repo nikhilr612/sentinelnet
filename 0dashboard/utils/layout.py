@@ -31,8 +31,8 @@ def create_banner(app):
         id="banner",
         className="banner",
         children=[
-            html.Img(src=app.get_asset_url("merlion_small.svg")),
-            html.Plaintext("  Powered by Salesforce AI Research"),
+            html.Img(src=app.get_asset_url("netlogo.png")),
+            html.Plaintext("  Dashboard powered by Merlion"),
         ],
     )
 
@@ -50,6 +50,7 @@ def create_layout() -> html.Div:
     )
     values.append("anomaly")
     # Forecasting tab
+<<<<<<< HEAD
     children.append(
         dcc.Tab(label="Forecasting", value="forecasting", style=tab_style, selected_style=tab_selected_style)
     )
@@ -59,6 +60,12 @@ def create_layout() -> html.Div:
         dcc.Tab(label="Violations", value="violations", style=tab_style, selected_style=tab_selected_style)
     )
     values.append("violations")
+=======
+    # children.append(
+    #    dcc.Tab(label="Forecasting", value="forecasting", style=tab_style, selected_style=tab_selected_style)
+    # )
+    # values.append("forecasting")
+>>>>>>> f5b063f263e13c2be27e13890595f53193844ceb
 
     layout = html.Div(
         id="app-content",
