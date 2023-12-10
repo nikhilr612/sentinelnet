@@ -12,7 +12,7 @@ class LogType(Enum):
     MEM_USAGE = 2     # Log type for Memory usage.      data: float
     # Log type for new processes      data: str   (process name)
     NEW_PROCESS = 3
-    NET_CAPTURE = -4  # Log type for incoming packets.
+    NET_CAPTURE = 4  # Log type for incoming packets.
     # Log type for disk read          data: (count, bytes, time)
     DISK_READ = -5
     # Log type for disk write         data: (count, bytes, time)

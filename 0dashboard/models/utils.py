@@ -25,7 +25,7 @@ class DataMixin:
             df = pd.DataFrame(data, columns=['timestamp', 'count', 'bytes', 'time'])
         else:
             df = pd.DataFrame(data, columns=['timestamp', attr])
-        df['timestamp'] = pd.to_numeric(df['timestamp']).astype(int)
+        df['timestamp'] = pd.to_numeric(df['timestamp']).astype(np.int64)
         df = df.drop_duplicates(subset=['timestamp'])
         index_type = df.dtypes[df.columns[0]]
         df = df.set_index(df.columns[0])

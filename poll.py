@@ -91,4 +91,4 @@ class Sniffer:
     def _append_packet(self, x):
         if x.haslayer(HTTPRequest) or x[TCP].dport == 443:
             self.log_queue.append(llog.new_line(
-                llog.LogType.NET_CAPTURE, (x[IP].src, x[IP].dst))) # Is src necessary as only requests are captured?
+                llog.LogType.NET_CAPTURE, x[IP].dst))

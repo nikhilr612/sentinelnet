@@ -10,7 +10,8 @@ PREFIX_S = "computer"
 r = redis.Redis(host='localhost', port=6379, db=0)
 app = None;
 
-whitelist = set(stdPath('./whitelist.txt').read_text().split('\n')); 
+whitelist = set(stdPath('./whitelist.txt').read_text().split('\n'));
+blacklist = set(stdPath('./blacklist.txt').read_text().split('\n'));
 
 def action(mac_addr, data):
     dev_id = PREFIX_S + ':' + mac_addr
@@ -31,6 +32,11 @@ def action(mac_addr, data):
                 print(mac_addr, "has spawned non-whitelisted process");
             else:
                 continue; # Don't bother with 'OK' processes.
+        elif log_type == LogType.NET_CAPTURE:
+            if log[2] in blacklist:
+                print(mac_addr, "has sent request to blacklisted ip");
+            else:
+                continue; # Don't bother with 'OK' ips.
         data_point = (log[0], *log[2]) if log_type.has_tuple() else (log[0], log[2])
         r.json().arrappend(dev_id, log_type.name.lower(), data_point)
 
