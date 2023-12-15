@@ -35,24 +35,24 @@ class DefaultEncoder(json.JSONEncoder):
         return super().default(obj)
 
 @callback(
-    Output("select-device", "options"),
-    Output("select-device", "value"),
-    Input("refresh-devices", 'n_clicks')
+    Output("data-select-device", "options"),
+    Output("data-select-device", "value"),
+    Input("data-refresh-devices", 'n_clicks')
 )
 def refresh_devices(n_clicks):
     ctx = dash.callback_context
     name = None
     options = []
     prop_id = ctx.triggered_id
-    if prop_id == 'refresh-devices' and n_clicks>0:
+    if prop_id == 'data-refresh-devices' and n_clicks>0:
         for dev in r.keys():
             options.append({"label": dev.decode(), "value": dev.decode()})
     return options, name
 
 @callback(
-    Output("select-file", "options"),
-    Output("select-file", "value"),
-    Input("select-device", "value"),
+    Output("data-select-file", "options"),
+    Output("data-select-file", "value"),
+    Input("data-select-device", "value"),
 )
 def load_data(dev):
     name = None
@@ -70,7 +70,7 @@ def load_data(dev):
     Output("data-exception-modal", "is_open"),
     Output("data-exception-modal-content", "children"),
     [Input("data-btn", "n_clicks"), Input("data-exception-modal-close", "n_clicks")],
-    [State("select-file", "value"), State("select-device", "value"), State("data-state", "data")],
+    [State("data-select-file", "value"), State("data-select-device", "value"), State("data-state", "data")],
     running=[(Output("data-btn", "disabled"), True, False), (Output("data-cancel-btn", "disabled"), False, True)],
     cancel=[Input("data-cancel-btn", "n_clicks")],
     background=True,
