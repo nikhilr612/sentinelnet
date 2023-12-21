@@ -2,7 +2,6 @@ from enum import Enum
 from collections import namedtuple
 from datetime import datetime, timezone
 from msgpack import ExtType
-from sys import byteorder
 
 LOG_TYPE_CODE = 42
 
@@ -13,7 +12,7 @@ class LogType(Enum):
     MEM_USAGE = 2     # Log type for Memory usage.      data: float
     # Log type for new processes      data: str   (process name)
     NEW_PROCESS = 3
-    NET_CAPTURE = -4  # Log type for incoming packets.
+    NET_CAPTURE = 4  # Log type for incoming packets.
     # Log type for disk read          data: (count, bytes, time)
     DISK_READ = -5
     # Log type for disk write         data: (count, bytes, time)
@@ -36,11 +35,11 @@ def new_line(logtype, data):
 
 def msgpack_hook(obj):
     if isinstance(obj, LogType):
-        return ExtType(LOG_TYPE_CODE, obj.value.to_bytes(1, byteorder, signed=True))
+        return ExtType(LOG_TYPE_CODE, obj.value.to_bytes(1, 'big', signed=True))
     raise TypeError("Unknown type: %r" % (obj,))
 
 
 def msgupack_hook(code, data):
     if code == LOG_TYPE_CODE:
-        return int.from_bytes(data, byteorder, signed=True)
+        return int.from_bytes(data, 'big', signed=True)
     return ExtType(code, data)

@@ -5,7 +5,6 @@ from llog import msgupack_hook
 from collections.abc import Callable
 import nacl.public as nacl
 import scapy.layers.l2 as scapy_l2
-from sys import byteorder
 
 # Type hint for servlet action callback.
 # First parameter is an identifier for the connection.
@@ -35,10 +34,10 @@ def _ecc_base(ip_addr: str, conn: socket.socket, func: Callback_t):
     skey = nacl.PrivateKey.generate()                          # Ephemeral key
     key_data = skey.public_key.encode(encoder=nacl.encoding.RawEncoder)
     # Send non-zero length value
-    conn.sendall(len(key_data).to_bytes(1, byteorder))
-    conn.sendall(key_data)                                     # Send key.
+    conn.sendall(len(key_data).to_bytes(1, 'big'))
+    conn.sendall(key_data)
     unseal_box = nacl.SealedBox(skey)
-    data_len = int.from_bytes(conn.recv(4), byteorder)
+    data_len = int.from_bytes(conn.recv(4), 'big')
     raw_data = unseal_box.decrypt(
         conn.recv(data_len))         # TODO Better way?
     data = msgpack.unpackb(raw_data, ext_hook=msgupack_hook)
