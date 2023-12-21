@@ -71,6 +71,8 @@ if __name__ == "__main__":
                     description='Headless client monitor')
     parser.add_argument('--host', type=str, default='localhost');           # positional argument
     parser.add_argument('-p', '--port', type=int, default=6444);
-    parser.add_argument('-r', '--rperiod', type=float, default=15);
+    parser.add_argument('-r', '--rperiod', type=float, default=10, help="The time duration between reports in minutes");
+    parser.add_argument('-rp','--respoll', type=int, default=60, help="Time duration between successive resource polls in seconds");
+    parser.add_argument('-pp','--procpoll', type=int, default=30, help="Time duration between successive process polls in seconds");
     args = parser.parse_args();
-    Client(args.rperiod, args.host, args.port).begin();
+    Client(args.rperiod, args.host, args.port, respoll_period=args.respoll, procpoll_period=args.procpoll).begin();
